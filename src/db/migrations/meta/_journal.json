@@ -29,6 +29,20 @@
       "when": 1720527816050,
       "tag": "0003_marvelous_titanium_man",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1720687456136,
+      "tag": "0004_breezy_loa",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1720688272001,
+      "tag": "0005_fixed_radioactive_man",
+      "breakpoints": true
     }
   ]
 }

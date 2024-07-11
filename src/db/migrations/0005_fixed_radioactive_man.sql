@@ -1,0 +1,1 @@
+ALTER TABLE `auth_session` MODIFY COLUMN `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
