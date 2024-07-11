@@ -1,8 +1,13 @@
 import express, { Request, Response } from "express";
 import { z } from 'zod';
 import { db } from "../../db/setup";
-import { users } from "../../db/schema";
-import argon2 from 'argon2';
+import { verify_user } from "../../db/schema";
+import { sendVerificationEmail } from '../../helper/sendMail'
+const crypto = require('crypto');
+
+function generateVerificationCode() {
+    return crypto.randomInt(100000, 1000000); // Generates a 6-digit number
+}
 
 const signupRouter = express.Router();
 
@@ -15,13 +20,14 @@ const signupReqBody = z.object({
 signupRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const { username, email, password } = signupReqBody.parse(req.body);
-        const hashedPassword = await argon2.hash(password.toString());
-        await db.insert(users).values({ username, email, password: hashedPassword });
-        return res.status(201).json({
-            success: true,
-            data: { username, email },
-            message: "Added Successfully",
-        });
+        const verification_code = generateVerificationCode()
+        await db.insert(verify_user).values({ username, email, password, verification_code});
+        sendVerificationEmail(email, verification_code)
+        .then(() => {
+            return res.status(201).json({
+                msg: "User should receive an email with the verification code"
+            });
+        })
     } catch (error) {
         if (error instanceof z.ZodError) {
             return res.status(400).json({

@@ -1,0 +1,1 @@
+ALTER TABLE `verify_user` MODIFY COLUMN `verification_code` int NOT NULL;

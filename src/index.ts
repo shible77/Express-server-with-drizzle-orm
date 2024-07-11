@@ -13,10 +13,12 @@ app.use(cors({
   app.use(cookieParser());
 
 import signupRouter from "./routes/auth/signup";
+import verifyUserRouter from "./routes/auth/verifyUser";
 import loginRouter from "./routes/auth/login";
 import logoutRouter from "./routes/auth/logout";
 import addProductRouter from "./routes/addProduct";
 app.use("/api", signupRouter)
+app.use("/api", verifyUserRouter)
 app.use("/api", loginRouter)
 app.use("/api", logoutRouter)
 app.use("/api", addProductRouter)

@@ -19,3 +19,11 @@ export const auth_session = mysqlTable("auth_session", {
   user_id : int("user_id").notNull(),
   created_at : datetime("created_at").default(sql`CURRENT_TIMESTAMP`).notNull()
 })
+
+export const verify_user = mysqlTable("verify_user",{
+  id: serial('id').primaryKey(), 
+  username: varchar("username", { length: 256 }).notNull().unique(),
+  email: varchar("email", { length: 256 }).notNull().unique(),
+  password: varchar("password", { length: 256 }).notNull(),
+  verification_code : int("verification_code").notNull(),
+})
