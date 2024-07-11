@@ -43,6 +43,13 @@
       "when": 1720688272001,
       "tag": "0005_fixed_radioactive_man",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1720690443440,
+      "tag": "0006_clear_mastermind",
+      "breakpoints": true
     }
   ]
 }

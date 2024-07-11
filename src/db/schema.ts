@@ -1,4 +1,4 @@
-import { date, int, mysqlTable, serial, varchar, timestamp } from "drizzle-orm/mysql-core";
+import {int, mysqlTable, serial, varchar, datetime } from "drizzle-orm/mysql-core";
 import { sql } from 'drizzle-orm'
 
 export const users = mysqlTable("users", {
@@ -17,5 +17,5 @@ export const products = mysqlTable("products", {
 export const auth_session = mysqlTable("auth_session", {
   session_id : varchar("session_id", { length : 50}).primaryKey(),
   user_id : int("user_id").notNull(),
-  created_at : timestamp("created_at").default(sql`CURRENT_TIMESTAMP`).notNull()
+  created_at : datetime("created_at").default(sql`CURRENT_TIMESTAMP`).notNull()
 })

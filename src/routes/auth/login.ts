@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
 import { z } from 'zod';
 import { db } from "../../db/setup";
-import { users } from "../../db/schema";
+import { users, auth_session } from "../../db/schema";
 import { eq } from "drizzle-orm";
-const jwt = require('jsonwebtoken')
+const { v4: uuidv4 } = require('uuid');
 import argon2 from 'argon2';
 import dotenv from "dotenv";
 dotenv.config();
@@ -30,7 +30,11 @@ loginRouter.post("/login", async (req: Request, res: Response) => {
 
         const passwordMatch = await argon2.verify(user[0]?.password, password.toString());
         if (passwordMatch) {
-            const token = jwt.sign({ user: user[0] }, process.env.JWT_SECRET, { expiresIn: '7d' });
+            const token = uuidv4();
+            await db.insert(auth_session).values({
+                session_id : token,
+                user_id : user[0].id
+            })
             res.cookie('token', token, { 
                 httpOnly: true,    // Prevents client-side JavaScript from accessing the cookie
                 secure: true,      // Ensures the cookie is only sent over HTTPS
