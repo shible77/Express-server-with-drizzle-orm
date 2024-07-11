@@ -14,9 +14,11 @@ app.use(cors({
 
 import signupRouter from "./routes/auth/signup";
 import loginRouter from "./routes/auth/login";
+import logoutRouter from "./routes/auth/logout";
 import addProductRouter from "./routes/addProduct";
 app.use("/api", signupRouter)
 app.use("/api", loginRouter)
+app.use("/api", logoutRouter)
 app.use("/api", addProductRouter)
 
 
