@@ -16,7 +16,7 @@ export const sendVerificationEmail = (userEmail : string, verificationCode : num
     const message = {
         from: process.env.EMAIL,
         to: userEmail,
-        subject: "Verify you account",
+        subject: "Verify your account",
         text: `Your verification code is: ${verificationCode}`,
         html: `<p>Your verification code is: <strong>${verificationCode}</strong></p>`
     };
