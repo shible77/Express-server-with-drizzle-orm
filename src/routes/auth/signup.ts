@@ -20,12 +20,15 @@ const signupReqBody = z.object({
 signupRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const { username, email, password } = signupReqBody.parse(req.body);
-        const verification_code = generateVerificationCode()
-        await db.insert(verify_user).values({ username, email, password, verification_code});
+        const verification_code = generateVerificationCode();
+        const [result] = await db.insert(verify_user).values({ username, email, password, verification_code });
+        const insertId = result.insertId; 
         sendVerificationEmail(email, verification_code)
         .then(() => {
             return res.status(201).json({
-                msg: "User should receive an email with the verification code"
+                msg: "User should receive an email with the verification code",
+                verification_Id: insertId,
+                email : email
             });
         })
     } catch (error) {
