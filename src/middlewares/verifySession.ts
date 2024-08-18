@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { db } from "../db/setup";
-import { auth_session } from "../db/schema";
+import { auth_session, users } from "../db/schema";
 import { eq } from "drizzle-orm";
 dotenv.config();
 
 export interface SessionRequest extends Request {
-  user?: any;
+  user?: object;
 }
 
 const verifySession = async (
@@ -36,6 +36,8 @@ const verifySession = async (
       await db.delete(auth_session).where(eq(auth_session.session_id, token))
       return res.status(401).json({ Message: "Session Expires, log in again" });
     }
+    const user = await db.select().from(users).where(eq(users.id, fetchToken[0].user_id)).limit(1)
+    req.user = user[0]
     next();
   } catch (error) {
     return res.status(500).json({ Message: "Internal server error", error });

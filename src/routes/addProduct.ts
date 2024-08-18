@@ -2,7 +2,7 @@ import express, {Request, Response } from 'express';
 import { z } from 'zod';
 import { db } from '../db/setup';
 import { users, products } from '../db/schema';
-import verifySession from '../middlewares/verifySession';
+import verifySession, { SessionRequest } from '../middlewares/verifySession';
 
 const addProductRouter = express.Router();
 
@@ -10,7 +10,7 @@ const addProductReqBody = z.object({
     product_name : z.string(),
     description : z.string().nullable()
 })
-addProductRouter.post("/addProduct", verifySession, async(req, res) => {
+addProductRouter.post("/addProduct", verifySession, async(req : SessionRequest, res) => {
     try{
         const { product_name, description } = addProductReqBody.parse(req.body)
         await db.insert(products).values({product_name, description})
