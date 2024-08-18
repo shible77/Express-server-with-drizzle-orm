@@ -32,7 +32,7 @@ const verifySession = async (
     }
     const {created_at} = fetchToken[0]
     
-    if(Date.now() - created_at.getTime() > 1000 * 60 * 60 * 24 * 7){
+    if((Date.now()+21600000) - created_at.getTime() > 1000 * 60 * 60 * 24 * 7){
       await db.delete(auth_session).where(eq(auth_session.session_id, token))
       return res.status(401).json({ Message: "Session Expires, log in again" });
     }
