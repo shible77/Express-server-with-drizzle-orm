@@ -21,7 +21,8 @@ changeEmailRouter.post('/changeEmail', async(req, res) => {
        .then(() => {
            return res.status(201).json({
                msg: "Verification code is sent to the updated email",
-               email : email
+               email : email,
+               verification_id : verification_id
            });
        })
     }catch(error){

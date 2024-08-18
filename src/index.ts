@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
-const port = process.env.port || 5000
+const port = process.env.PORT || 5000
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
+import dotenv  from 'dotenv';
+dotenv.config();
 
 app.use(cors({
     origin: ["http://localhost:5000"],
@@ -27,5 +29,5 @@ app.use("/api", changeEmailRouter)
 
 
 app.listen(port, () => {
-    console.log("The app is listening to the port : "+port)
+    console.log("The app is running on : http://localhost:"+port)
 })
