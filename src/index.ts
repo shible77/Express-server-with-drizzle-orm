@@ -17,6 +17,7 @@ import logoutRouter from "./routes/auth/logout";
 import addProductRouter from "./routes/addProduct";
 import changeEmailRouter from './routes/auth/changeEmail'
 import resendEmailRouter from './routes/auth/ResendEmail';
+import changePassVerifyRouter from './routes/auth/changePassVerify';
 app.use("/api", signupRouter)
 app.use("/api", verifyUserRouter)
 app.use("/api", loginRouter)
@@ -24,6 +25,7 @@ app.use("/api", logoutRouter)
 app.use("/api", addProductRouter)
 app.use("/api", changeEmailRouter)
 app.use("/api", resendEmailRouter)
+app.use("/api", changePassVerifyRouter)
 
 
 app.listen(port, () => {
