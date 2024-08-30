@@ -23,7 +23,7 @@ resendEmailRouter.get("/resendEmail/:id", async(req, res) => {
         }
         sendVerificationEmail(data[0].email, v_code)
         .then(() => {
-            return res.status(200).json({status: true, msg: 'Verification code has sent to you email', email: data[0].email})
+            return res.status(200).json({status: true, msg: 'A verification code has sent to the email', email: data[0].email})
         })
     }catch(error){
         if (error instanceof z.ZodError) {

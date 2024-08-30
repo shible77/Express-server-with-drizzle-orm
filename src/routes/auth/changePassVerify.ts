@@ -59,6 +59,7 @@ changePassVerifyRouter.post("/verifyCode", async(req, res) => {
        if(data.length === 0 || data[0].verification_code !== verification_code){
         return res.status(500).json({status : false, msg : 'Invalid verification code'})
        }
+       await db.delete(verify_user).where(eq(verify_user.id, verification_id))
        const user = await db.select().from(users).where(eq(users.email, data[0].email)).limit(1)
        if(user.length === 0){
         return res.status(401).json({status : false, msg : 'No user exist for this email'})
