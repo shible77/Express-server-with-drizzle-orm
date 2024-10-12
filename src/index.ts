@@ -6,9 +6,12 @@ const cors = require('cors');
 import dotenv  from 'dotenv';
 dotenv.config();
 
-app.use(cors());
-  app.use(express.json());
-  app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:5173', // Front-end URL
+  credentials: true,               // Allow sending cookies
+}));
+app.use(express.json());
+app.use(cookieParser());
 
 import signupRouter from "./routes/auth/signup";
 import verifyUserRouter from "./routes/auth/verifyUser";

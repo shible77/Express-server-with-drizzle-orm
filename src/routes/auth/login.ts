@@ -37,7 +37,7 @@ loginRouter.post("/login", async (req: Request, res: Response) => {
             })
             res.cookie('token', token, { 
                 httpOnly: true,    // Prevents client-side JavaScript from accessing the cookie
-                secure: true,      // Ensures the cookie is only sent over HTTPS
+                secure: true , //process.env.NODE_ENV === 'production',      // Ensures the cookie is only sent over HTTPS
                 sameSite: 'strict' // Helps prevent CSRF attacks
               });
             return res.status(200).json({

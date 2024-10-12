@@ -14,13 +14,12 @@ const verifySession = async (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers["authorization"];
+  const token = req.cookies.token;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ Message: "The user is not authenticated" });
-  }
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized, token missing" });
+    }
 
-  const token = authHeader.split(" ")[1];
   try {
     const fetchToken = await db
       .select()
@@ -28,7 +27,7 @@ const verifySession = async (
       .where(eq(auth_session.session_id, token));
 
     if (fetchToken.length === 0) {
-      return res.status(401).json({ Message: "The user is not authenticated" });
+      return res.status(401).json({ Message: "Invalid Token" });
     }
     const {created_at} = fetchToken[0]
     
